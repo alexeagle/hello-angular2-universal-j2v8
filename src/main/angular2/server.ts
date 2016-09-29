@@ -1,23 +1,19 @@
 import 'angular2-universal/polyfills';
-import {JavaEngine} from './engine/java_engine.ts'
+import {JavaEngine} from './engine/java_engine'
 
 import * as path from 'path';
 
 // Angular 2 Universal
 import {
-    provide,
-    enableProdMode,
     REQUEST_URL,
     ORIGIN_URL,
-    BASE_URL,
-    NODE_ROUTER_PROVIDERS,
     NODE_HTTP_PROVIDERS,
-    BootloaderConfig
+
 } from 'angular2-universal';
 
 // Application
-import {App} from './app/app.component';
-
+import {MainModule} from './app/module';
+import {enableProdMode} from '@angular/core';
 enableProdMode();
 
 interface IExampleRequestInfo {

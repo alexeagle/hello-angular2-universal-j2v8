@@ -1,5 +1,6 @@
-import {selectorRegExpFactory, Bootloader, BootloaderConfig} from 'angular2-universal';
+import {platformNodeDynamic} from 'angular2-universal';
 
+// Defined in Java by UniversalRenderingEngine
 declare function registerJavaEngine(api:JavaEngine);
 
 export interface IRenderCallback {
@@ -7,13 +8,12 @@ export interface IRenderCallback {
 }
 
 export interface IBootloaderConfigProvider {
-    (requestInfo:any):BootloaderConfig;
+    (requestInfo:any):any;
 }
 
 export class JavaEngine {
     private _clientHtml:string;
-    private _loadedBootloader:Bootloader;
-
+    private _loadedBootloader:any;
     constructor(private _bootloaderConfigProvider:IBootloaderConfigProvider) {
     }
 
@@ -26,9 +26,11 @@ export class JavaEngine {
     }
 
     public render(requestInfo:any, renderId:number, callback:IRenderCallback) {
-        let options = this._bootloaderConfigProvider(requestInfo) || <BootloaderConfig>{};
+        let options = this._bootloaderConfigProvider(requestInfo);
         options.providers = options.providers || undefined;
         options.preboot = options.preboot || undefined;
+
+        const platformRef = platformNodeDynamic(options.providers);
 
         if (!('directives' in options)) {
             throw new Error('Please provide an `directives` property with your Angular 2 application');

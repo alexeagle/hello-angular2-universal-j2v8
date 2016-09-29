@@ -2,5 +2,4 @@ nbactions.xml
 ng2-target
 node_modules
 target
-typings
 src/main/angular2/.idea
